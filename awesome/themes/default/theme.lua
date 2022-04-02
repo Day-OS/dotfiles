@@ -5,15 +5,17 @@
 local theme_assets = require("beautiful.theme_assets")
 local xresources = require("beautiful.xresources")
 local dpi = xresources.apply_dpi
-
+local wibox = require("wibox")
 local xrdb = xresources.get_current_theme()
 local gfs = require("gears.filesystem")
 local themes_path = gfs.get_themes_dir()
 
 local theme = {}
 
-theme.font          = "sans 8"
+theme.color_array = {xrdb.color0, xrdb.color1, xrdb.color2, xrdb.color3, xrdb.color4, xrdb.color5, xrdb.color6, xrdb.color7, xrdb.color8, xrdb.color9, xrdb.color10, xrdb.color11, xrdb.color12, xrdb.color13, xrdb.color14, xrdb.color15}
 
+
+theme.font          = "sans 8"
 theme.bg_normal     = xrdb.background
 theme.bg_focus      = xrdb.color10
 theme.bg_urgent     = "#ff0000"
@@ -130,6 +132,7 @@ theme.icon_theme = nil
 theme.icon_size = 12
 theme.icon_font = "Font Awesome 5 Free-Solid-900 " -- attention to space at the end!
 theme.icon_color = "#587D8D"
+
 
 
 return theme

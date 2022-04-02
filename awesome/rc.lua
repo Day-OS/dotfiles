@@ -3,6 +3,7 @@
 pcall(require, "luarocks.loader")
 
 -- Standard awesome library
+
 local gears = require("gears")
 local awful = require("awful")
 require("awful.autofocus")
@@ -15,10 +16,13 @@ local naughty = require("naughty")
 naughty.config.defaults['icon_size'] = 100
 local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup")
+local lain = require("lain")
+local separators = lain.util.separators
+
+
 -- Enable hotkeys help widget for VIM and other apps
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
-
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -48,10 +52,10 @@ end
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
 beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
-terminal = "alacritty"
-editor = os.getenv("EDITOR") or "nano"
-editor_cmd = terminal .. " -e " .. editor
-modkey = "Mod4"
+local terminal = "alacritty"
+local editor = os.getenv("EDITOR") or "nano"
+local editor_cmd = terminal .. " -e " .. editor
+local modkey = "Mod4"
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
@@ -76,7 +80,7 @@ awful.layout.layouts = {
 
 -- {{{ Menu
 -- Create a launcher widget and a main menu
-myawesomemenu = {
+local myawesomemenu = {
    { "hotkeys", function() hotkeys_popup.show_help(nil, awful.screen.focused()) end },
    { "manual", terminal .. " -e man awesome" },
    { "edit config", editor_cmd .. " " .. awesome.conffile },
@@ -100,7 +104,7 @@ mykeyboardlayout = awful.widget.keyboardlayout()
 
 -- {{{ Wibar
 -- Create a textclock widget
-mytextclock = wibox.widget.textclock()
+local mytextclock = wibox.widget.textclock()
 
 -- Create a wibox for each screen and add it
 local taglist_buttons = gears.table.join(
@@ -157,6 +161,29 @@ end
 -- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
 screen.connect_signal("property::geometry", set_wallpaper)
 
+-- FontAwesome
+local space = wibox.widget{
+    markup = ' <span color="'.. beautiful.bg_normal ..'">AA</span> ',
+    align  = 'center',
+    valign = 'center',
+    widget = wibox.widget.textbox
+}
+local facpuicon = wibox.widget{
+    markup = ' <span color="'.. beautiful.bg_normal ..'">\u{25E2}</span> ',
+    align  = 'center',
+    valign = 'center',
+    widget = wibox.widget.textbox
+}
+facpuicon.font = beautiful.icon_font .. beautiful.icon_size
+local arrl_ld1 = separators.arrow_right("alpha", beautiful.bg_focus)
+local arrl_ld2 = separators.arrow_right(beautiful.bg_focus, "alpha")
+local arrl_dl1 = separators.arrow_left(beautiful.bg_focus, "alpha")
+local arrl_dl2 = separators.arrow_left("alpha", beautiful.bg_focus)
+
+local function changewidgetbg(wi, color)
+    return wibox.container.background(wi, color)
+end
+
 awful.screen.connect_for_each_screen(function(s)
     -- Wallpaper
     set_wallpaper(s)
@@ -196,15 +223,26 @@ awful.screen.connect_for_each_screen(function(s)
         layout = wibox.layout.align.horizontal,
         { -- Left widgets
             layout = wibox.layout.fixed.horizontal,
-            mylauncher,
+            --mylauncher,
             s.mytaglist,
-            s.mypromptbox,
+            --s.mypromptbox,
         },
         s.mytasklist, -- Middle widget
         { -- Right widgets
+
             layout = wibox.layout.fixed.horizontal,
+            space,
+
+            arrl_dl2,
+            --changewidgetbg(facpuicon, beautiful.bg_focus),
+            arrl_dl1,
+
+            --arrl_dl2,
+
             mykeyboardlayout,
             wibox.widget.systray(),
+            
+
             mytextclock,
             s.mylayoutbox,
         },
@@ -293,7 +331,7 @@ globalkeys = gears.table.join(
 
     awful.key({ modkey, "Control" }, "n",
               function ()
-                  local c = awful.client.restore()
+                local c = awful.client.restore()
                   -- Focus restored client
                   if c then
                     c:emit_signal(
@@ -374,8 +412,8 @@ for i = 1, 9 do
         -- View tag only.
         awful.key({ modkey }, "#" .. i + 9,
                   function ()
-                        local screen = awful.screen.focused()
-                        local tag = screen.tags[i]
+                    local screen = awful.screen.focused()
+                    local tag = screen.tags[i]
                         if tag then
                            tag:view_only()
                         end
@@ -384,8 +422,8 @@ for i = 1, 9 do
         -- Toggle tag display.
         awful.key({ modkey, "Control" }, "#" .. i + 9,
                   function ()
-                      local screen = awful.screen.focused()
-                      local tag = screen.tags[i]
+                    local screen = awful.screen.focused()
+                    local tag = screen.tags[i]
                       if tag then
                          awful.tag.viewtoggle(tag)
                       end
@@ -395,7 +433,7 @@ for i = 1, 9 do
         awful.key({ modkey, "Shift" }, "#" .. i + 9,
                   function ()
                       if client.focus then
-                          local tag = client.focus.screen.tags[i]
+                        local tag = client.focus.screen.tags[i]
                           if tag then
                               client.focus:move_to_tag(tag)
                           end
@@ -406,7 +444,7 @@ for i = 1, 9 do
         awful.key({ modkey, "Control", "Shift" }, "#" .. i + 9,
                   function ()
                       if client.focus then
-                          local tag = client.focus.screen.tags[i]
+                        local tag = client.focus.screen.tags[i]
                           if tag then
                               client.focus:toggle_tag(tag)
                           end
