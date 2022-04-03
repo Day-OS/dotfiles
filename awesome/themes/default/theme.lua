@@ -19,18 +19,18 @@ theme.font          = "sans 8"
 theme.bg_normal     = xrdb.background
 theme.bg_focus      = xrdb.color10
 theme.bg_urgent     = "#ff0000"
-theme.bg_minimize   = "#444444"
+theme.bg_minimize   = xrdb.color2
 theme.bg_systray    = theme.bg_normal
 
 theme.fg_normal     = xrdb.color13
-theme.fg_focus      = xrdb.color15
+theme.fg_focus      = xrdb.background
 theme.fg_urgent     = "#ffffff"
 theme.fg_minimize   = "#ffffff"
 
 theme.useless_gap   = dpi(0)
-theme.border_width  = dpi(0)
-theme.border_normal = "#000000"
-theme.border_focus  = "#535d6c"
+theme.border_width  = dpi(1)
+theme.border_normal = xrdb.color10
+theme.border_focus  = xrdb.color2
 theme.border_marked = "#91231c"
 
 -- There are other variable sets

@@ -1,15 +1,9 @@
--- If LuaRocks is installed, make sure that packages installed through it are
--- found (e.g. lgi). If LuaRocks is not installed, do nothing.
 pcall(require, "luarocks.loader")
-
--- Standard awesome library
 
 local gears = require("gears")
 local awful = require("awful")
 require("awful.autofocus")
--- Widget and layout library
 local wibox = require("wibox")
--- Theme handling library
 local beautiful = require("beautiful")
 -- Notification library
 local naughty = require("naughty")
@@ -18,6 +12,8 @@ local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup")
 local lain = require("lain")
 local separators = lain.util.separators
+local markup = lain.util.markup
+local utils = require("utils")
 
 
 -- Enable hotkeys help widget for VIM and other apps
@@ -65,16 +61,9 @@ awful.layout.layouts = {
     awful.layout.suit.tile.bottom,
     awful.layout.suit.tile.top,
     awful.layout.suit.fair,
-    awful.layout.suit.fair.horizontal,
     awful.layout.suit.spiral,
     awful.layout.suit.spiral.dwindle,
-    awful.layout.suit.max,
-    awful.layout.suit.max.fullscreen,
-    awful.layout.suit.magnifier,
     awful.layout.suit.corner.nw,
-    -- awful.layout.suit.corner.ne,
-    -- awful.layout.suit.corner.sw,
-    -- awful.layout.suit.corner.se,
 }
 -- }}}
 
@@ -168,21 +157,60 @@ local space = wibox.widget{
     valign = 'center',
     widget = wibox.widget.textbox
 }
-local facpuicon = wibox.widget{
-    markup = ' <span color="'.. beautiful.bg_normal ..'">\u{25E2}</span> ',
-    align  = 'center',
-    valign = 'center',
-    widget = wibox.widget.textbox
-}
-facpuicon.font = beautiful.icon_font .. beautiful.icon_size
+local memicon = utils.createicon('\u{f538}') 
+local cpuicon = utils.createicon('\u{f2db}') 
+local neticon = utils.createicon('\u{f1eb}', beautiful.bg_focus) 
+
 local arrl_ld1 = separators.arrow_right("alpha", beautiful.bg_focus)
 local arrl_ld2 = separators.arrow_right(beautiful.bg_focus, "alpha")
 local arrl_dl1 = separators.arrow_left(beautiful.bg_focus, "alpha")
 local arrl_dl2 = separators.arrow_left("alpha", beautiful.bg_focus)
 
-local function changewidgetbg(wi, color)
-    return wibox.container.background(wi, color)
-end
+
+
+
+-- Calendar
+beautiful.cal = lain.widget.cal({
+    attach_to = { mytextclock },
+    notification_preset = {
+        font = "Terminus 10",
+        fg   = beautiful.fg_normal,
+        bg   = beautiful.bg_normal
+    }
+})
+
+local mem = lain.widget.mem{
+    settings = function()
+        widget:set_markup(markup.fontfg(beautiful.font, beautiful.bg_normal," " .. mem_now.used .. "MB "))
+    end
+}
+
+local net = lain.widget.net{
+    settings = function()
+        widget:set_markup(
+                          markup(beautiful.bg_minimize, " ▼ " .. string.format("%06.1f", net_now.received))
+                          .. " " ..
+                          markup(beautiful.fg_normal, " ▲ " .. string.format("%06.1f", net_now.sent) .. " "))
+    end
+}
+
+
+-- CPU
+local cpu = lain.widget.cpu{
+    settings = function()
+        widget:set_markup(markup.fontfg(beautiful.font,beautiful.bg_normal, " " .. cpu_now.usage .. "% "))
+    end
+}
+
+-- Coretemp
+local temp = lain.widget.temp{
+    settings = function()
+        widget:set_markup(markup.font(beautiful.font, " " .. coretemp_now .. "°C "))
+    end
+}
+
+
+
 
 awful.screen.connect_for_each_screen(function(s)
     -- Wallpaper
@@ -234,9 +262,16 @@ awful.screen.connect_for_each_screen(function(s)
             space,
 
             arrl_dl2,
-            --changewidgetbg(facpuicon, beautiful.bg_focus),
+            utils.changewidgetbg(memicon, beautiful.bg_focus),
+            utils.changewidgetbg(mem.widget, beautiful.bg_focus),
             arrl_dl1,
-
+            neticon,
+            net,
+            arrl_ld1,
+            utils.changewidgetbg(cpuicon, beautiful.bg_focus),
+            utils.changewidgetbg(cpu.widget, beautiful.bg_focus),
+            arrl_ld2,
+            --changewidgetbg(facpuicon, beautiful.bg_focus),
             --arrl_dl2,
 
             mykeyboardlayout,
@@ -260,6 +295,8 @@ root.buttons(gears.table.join(
 
 -- {{{ Key bindings
 globalkeys = gears.table.join(
+    awful.key({}, "Print", function ()awful.spawn("flameshot gui") end,
+              {description="takes a sreenshot, duh", group="DayOS"}),
     awful.key({ modkey,           }, "s",      hotkeys_popup.show_help,
               {description="show help", group="awesome"}),
     awful.key({ modkey,           }, "Left",   awful.tag.viewprev,

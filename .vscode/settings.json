@@ -6,6 +6,7 @@
         "screen",
         "root",
         "lobalkeys",
-        "clientkeys"
+        "clientkeys",
+        "widget"
     ]
 }
