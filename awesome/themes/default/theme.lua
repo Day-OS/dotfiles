@@ -15,7 +15,7 @@ local theme = {}
 theme.color_array = {xrdb.color0, xrdb.color1, xrdb.color2, xrdb.color3, xrdb.color4, xrdb.color5, xrdb.color6, xrdb.color7, xrdb.color8, xrdb.color9, xrdb.color10, xrdb.color11, xrdb.color12, xrdb.color13, xrdb.color14, xrdb.color15}
 
 
-theme.font          = "sans 8"
+theme.font          = "Terminus 8"--"sans 8"
 theme.bg_normal     = xrdb.background
 theme.bg_focus      = xrdb.color10
 theme.bg_urgent     = "#ff0000"
@@ -23,14 +23,14 @@ theme.bg_minimize   = xrdb.color2
 theme.bg_systray    = theme.bg_normal
 
 theme.fg_normal     = xrdb.color13
-theme.fg_focus      = xrdb.background
+theme.fg_focus      = theme.color_array[16]
 theme.fg_urgent     = "#ffffff"
-theme.fg_minimize   = "#ffffff"
+theme.fg_minimize   = xrdb.background
 
 theme.useless_gap   = dpi(0)
 theme.border_width  = dpi(1)
 theme.border_normal = xrdb.color10
-theme.border_focus  = xrdb.color2
+theme.border_focus  = xrdb.color10
 theme.border_marked = "#91231c"
 
 -- There are other variable sets
