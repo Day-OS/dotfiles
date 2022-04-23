@@ -15,10 +15,11 @@ local separators = lain.util.separators
 local markup = lain.util.markup
 local utils = require("utils")
 
-
 -- Enable hotkeys help widget for VIM and other apps
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
+
+awful.spawn("wal -R")
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -380,6 +381,8 @@ globalkeys = gears.table.join(
 
     -- Prompt
     awful.key({ modkey },            "r",     function () awful.spawn.with_shell("rofi -show run") --[[awful.screen.focused().mypromptbox:run()]] end,
+              {description = "run prompt", group = "launcher"}),
+    awful.key({ modkey },            "e",     function () awful.spawn.with_shell("rofi -show emoji -modi emoji") end,
               {description = "run prompt", group = "launcher"}),
 
     awful.key({ modkey }, "x",
