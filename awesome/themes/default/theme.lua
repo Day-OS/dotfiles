@@ -101,7 +101,7 @@ theme.titlebar_maximized_button_normal_active = themes_path.."default/titlebar/m
 theme.titlebar_maximized_button_focus_active  = themes_path.."default/titlebar/maximized_focus_active.png"
 
 --wal -i dotfiles/awesome/themes/default/wallpaper/kkkk.png --backend haishoku
-theme.wallpaper = themes_path.."default/wallpaper/bruni.jpg"
+--theme.wallpaper = themes_path.."default/wallpaper/nothing.jpg"
 
 -- You can use your own layout icons like this:
 theme.layout_fairh = themes_path.."defaultsudo /layouts/fairhw.png"
