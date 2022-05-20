@@ -2,6 +2,7 @@ pcall(require, "luarocks.loader")
 
 local gears = require("gears")
 local awful = require("awful")
+awful.spawn("wal -R")
 require("awful.autofocus")
 local wibox = require("wibox")
 local beautiful = require("beautiful")
@@ -20,7 +21,7 @@ local globalkeys = require("globalkeys")
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
 
-awful.spawn("wal -R")
+awful.spawn("xmousepasteblock")
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to

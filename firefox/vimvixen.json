@@ -1,0 +1,114 @@
+{
+    "keymaps": {
+      ":": {
+        "type": "command.show"
+      },
+      "o": {
+        "type": "command.show.open",
+        "alter": true
+      },
+      "O": {
+        "type": "command.show.tabopen",
+        "alter": false
+      },
+      "b": {
+        "type": "command.show.buffer"
+      },
+      "a": {
+        "type": "command.show.addbookmark",
+        "alter": true
+      },
+      "d": {
+        "type": "tabs.close",
+        "select": "right"
+      },
+      "D": {
+        "type": "tabs.close",
+        "select": "left"
+      },
+      "u": {
+        "type": "tabs.reopen"
+      },
+      "zz": {
+        "type": "zoom.neutral"
+      },
+      "df": {
+        "type": "follow.start",
+        "newTab": false,
+        "background": true
+      },
+      "m": {
+        "type": "mark.set.prefix"
+      },
+      "'": {
+        "type": "mark.jump.prefix"
+      },
+      "gu": {
+        "type": "navigate.parent"
+      },
+      "gU": {
+        "type": "navigate.root"
+      },
+      "gi": {
+        "type": "focus.input"
+      },
+      "gf": {
+        "type": "page.source"
+      },
+      "gh": {
+        "type": "page.home",
+        "newTab": false
+      },
+      "gH": {
+        "type": "page.home",
+        "newTab": true
+      },
+      "gr": {
+        "type": "tabs.reader.toggle"
+      },
+      "y": {
+        "type": "urls.yank"
+      },
+      "p": {
+        "type": "urls.paste",
+        "newTab": false
+      },
+      "P": {
+        "type": "urls.paste",
+        "newTab": true
+      },
+      "/": {
+        "type": "find.start"
+      },
+      "n": {
+        "type": "find.next"
+      },
+      "N": {
+        "type": "find.prev"
+      },
+      ".": {
+        "type": "repeat.last"
+      },
+      "<S-Esc>": {
+        "type": "addon.toggle.enabled"
+      }
+    },
+    "search": {
+      "default": "google",
+      "engines": {
+        "google": "https://google.com/search?q={}",
+        "yahoo": "https://search.yahoo.com/search?p={}",
+        "bing": "https://www.bing.com/search?q={}",
+        "duckduckgo": "https://duckduckgo.com/?q={}",
+        "twitter": "https://twitter.com/search?q={}",
+        "wikipedia": "https://en.wikipedia.org/w/index.php?search={}"
+      }
+    },
+    "properties": {
+      "hintchars": "abcdefghijklmnopqrstuvwxyzáéíúóàèìòùâêîôûç",
+      "smoothscroll": false,
+      "complete": "sbh",
+      "colorscheme": "system"
+    },
+    "blacklist": []
+  }

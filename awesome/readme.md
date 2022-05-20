@@ -7,3 +7,4 @@ noto-fonts
 noto-fonts-cjk
 ttf-twemoji
 ttf-font-awesome
+xmousepasteblock-git
