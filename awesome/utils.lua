@@ -22,8 +22,6 @@ local util = {
         }
         iconwidget.font = font .. size
         return iconwidget
-    end
-
-
+    end,
 }
 return util

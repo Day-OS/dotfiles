@@ -1,0 +1,18 @@
+#WPP folder
+FOLDER=~/dotfiles/awesome/themes/default/wallpaper/
+
+if [ $# -eq 0 ]; then
+	wallset --quit
+        #SELECTED IMAGE:
+        SECIMG=$(nsxiv -a -q -t -r -o $FOLDER | xargs readlink -f)
+else
+        SECIMG=$1
+fi
+
+
+wal -i $SECIMG --backend haishoku #--saturate 0.5	
+awesome-client "awesome.restart()"
+
+if [[ $SECIMG == *.mp4 ]]; then
+	wallset --video $SECIMG	
+fi
