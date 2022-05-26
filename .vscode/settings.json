@@ -8,5 +8,8 @@
         "lobalkeys",
         "clientkeys",
         "widget"
+    ],
+    "Lua.diagnostics.disable": [
+        "lowercase-global"
     ]
 }

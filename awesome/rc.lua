@@ -22,6 +22,7 @@ local globalkeys = require("globalkeys")
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
 
+awful.spawn("picom --experimental-backends")
 awful.spawn("xmousepasteblock")
 
 -- {{{ Error handling

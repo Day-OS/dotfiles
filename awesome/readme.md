@@ -8,3 +8,4 @@ noto-fonts-cjk
 ttf-twemoji
 ttf-font-awesome
 xmousepasteblock-git
+picom-jonaburg-git
