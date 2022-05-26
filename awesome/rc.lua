@@ -1,5 +1,5 @@
 pcall(require, "luarocks.loader")
-
+local cairo = require("lgi").cairo
 local gears = require("gears")
 local awful = require("awful")
 awful.spawn("wal -R")
@@ -12,9 +12,10 @@ naughty.config.defaults['icon_size'] = 100
 local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup")
 local lain = require("lain")
-local separators = lain.util.separators
+local lainseparators = lain.util.separators
 local markup = lain.util.markup
 local utils = require("utils")
+local sep = require("separators")
 local globalkeys = require("globalkeys")
 
 -- Enable hotkeys help widget for VIM and other apps
@@ -164,10 +165,10 @@ local memicon = utils.createicon('\u{f538}')
 local cpuicon = utils.createicon('\u{f2db}') 
 local neticon = utils.createicon('\u{f1eb}', beautiful.bg_focus) 
 
-local arrl_ld1 = separators.arrow_right("alpha", beautiful.bg_focus)
-local arrl_ld2 = separators.arrow_right(beautiful.bg_focus, "alpha")
-local arrl_dl1 = separators.arrow_left(beautiful.bg_focus, "alpha")
-local arrl_dl2 = separators.arrow_left("alpha", beautiful.bg_focus)
+local arrl_ld1 = lainseparators.arrow_right("alpha", beautiful.bg_focus)
+local arrl_ld2 = lainseparators.arrow_right(beautiful.bg_focus, "alpha")
+local arrl_dl1 = lainseparators.arrow_left(beautiful.bg_focus, "alpha")
+local arrl_dl2 = lainseparators.arrow_left("alpha", beautiful.bg_focus)
 
 
 
@@ -220,7 +221,7 @@ awful.screen.connect_for_each_screen(function(s)
     set_wallpaper(s)
 
     -- Each screen has its own tag table.
-    awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
+    awful.tag({ "1", "2", "3", "4", "5", "6"}, s, awful.layout.layouts[1])
 
     -- Create a promptbox for each screen
     s.mypromptbox = awful.widget.prompt()
@@ -243,7 +244,9 @@ awful.screen.connect_for_each_screen(function(s)
     s.mytasklist = awful.widget.tasklist {
         screen  = s,
         filter  = awful.widget.tasklist.filter.currenttags,
-        buttons = tasklist_buttons
+        buttons = tasklist_buttons,
+        style = {
+            shape  = function(cr, w, h)gears.shape.partially_rounded_rect(cr, w, h, true, true, false, false, 45) end}
     }
 
     -- Create the wibox
@@ -260,10 +263,12 @@ awful.screen.connect_for_each_screen(function(s)
         },
         s.mytasklist, -- Middle widget
         { -- Right widgets
-
-            layout = wibox.layout.fixed.horizontal,
+             layout = wibox.layout.fixed.horizontal,
             space,
-
+            --sep.new(beautiful.bg_focus, "alpha", sep.direction.RIGHT, sep.type.TRAPEZIUM),
+            --sep.new("alpha", beautiful.bg_focus, sep.direction.RIGHT, sep.type.TRAPEZIUM),
+            --sep.new(beautiful.bg_focus, "alpha", sep.direction.LEFT, sep.type.TRAPEZIUM),
+            --sep.new("alpha", beautiful.bg_focus, sep.direction.LEFT, sep.type.TRAPEZIUM),
             arrl_dl2,
             utils.changewidgetbg(memicon, beautiful.bg_focus),
             utils.changewidgetbg(mem.widget, beautiful.bg_focus),
