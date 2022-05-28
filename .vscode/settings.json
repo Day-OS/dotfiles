@@ -7,7 +7,11 @@
         "root",
         "lobalkeys",
         "clientkeys",
-        "widget"
+        "widget",
+        "net_now",
+        "mem_now",
+        "cpu_now",
+        "coretemp_now"
     ],
     "Lua.diagnostics.disable": [
         "lowercase-global"

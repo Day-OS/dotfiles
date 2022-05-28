@@ -1,6 +1,7 @@
 local wibox = require("wibox")
 local beautiful = require("beautiful")
 local gears = require("gears")
+local naughty = require("naughty")
 
 beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
 
@@ -24,4 +25,22 @@ local util = {
         return iconwidget
     end,
 }
+util.maximizebutton = function (cr)
+    local maximizebutton = util.changewidgetbg(util.createicon('\u{f31e}', beautiful.bg_focus), beautiful.color_array[1])
+    maximizebutton:connect_signal("button::press", function(c, _, _, button)
+        if button == 1 then
+            cr.maximized = not cr.maximized
+        end
+    end)
+    return maximizebutton
+end
+util.close = function (cr)
+    local maximizebutton = util.changewidgetbg(util.createicon('\u{f54c}', beautiful.bg_focus), beautiful.color_array[1])
+    maximizebutton:connect_signal("button::press", function(c, _, _, button)
+        if button == 1 then
+            cr:kill()
+        end
+    end)
+    return maximizebutton
+end
 return util

@@ -17,6 +17,7 @@ local markup = lain.util.markup
 local utils = require("utils")
 local sep = require("separators")
 local globalkeys = require("globalkeys")
+local dpi = require("beautiful.xresources").apply_dpi
 
 -- Enable hotkeys help widget for VIM and other apps
 -- when client with a matching name is opened:
@@ -157,14 +158,14 @@ screen.connect_signal("property::geometry", set_wallpaper)
 
 -- FontAwesome
 local space = wibox.widget{
-    markup = ' <span color="'.. beautiful.bg_normal ..'">AA</span> ',
+    markup = ' <span color="'.. beautiful.bg_normal ..'"></span> ',
     align  = 'center',
     valign = 'center',
     widget = wibox.widget.textbox
 }
 local memicon = utils.createicon('\u{f538}') 
 local cpuicon = utils.createicon('\u{f2db}') 
-local neticon = utils.createicon('\u{f1eb}', beautiful.bg_focus) 
+local neticon = utils.createicon('\u{f1eb}', beautiful.bg_focus)
 
 local arrl_ld1 = lainseparators.arrow_right("alpha", beautiful.bg_focus)
 local arrl_ld2 = lainseparators.arrow_right(beautiful.bg_focus, "alpha")
@@ -264,8 +265,8 @@ awful.screen.connect_for_each_screen(function(s)
         },
         s.mytasklist, -- Middle widget
         { -- Right widgets
-             layout = wibox.layout.fixed.horizontal,
             space,
+             layout = wibox.layout.fixed.horizontal,
             --sep.new(beautiful.bg_focus, "alpha", sep.direction.RIGHT, sep.type.TRAPEZIUM),
             --sep.new("alpha", beautiful.bg_focus, sep.direction.RIGHT, sep.type.TRAPEZIUM),
             --sep.new(beautiful.bg_focus, "alpha", sep.direction.LEFT, sep.type.TRAPEZIUM),
@@ -274,7 +275,9 @@ awful.screen.connect_for_each_screen(function(s)
             utils.changewidgetbg(memicon, beautiful.bg_focus),
             utils.changewidgetbg(mem.widget, beautiful.bg_focus),
             arrl_dl1,
+            --sep.new("alpha", beautiful.bg_focus, sep.direction.LEFT, sep.type.TRAPEZIUM),
             neticon,
+            --sep.new("alpha", beautiful.bg_focus, sep.direction.RIGHT, sep.type.TRAPEZIUM),
             --net,
             arrl_ld1,
             utils.changewidgetbg(cpuicon, beautiful.bg_focus),
@@ -529,9 +532,13 @@ client.connect_signal("request::titlebars", function(c)
         end)
     )
 
-    awful.titlebar(c) : setup {
+    --15?
+    awful.titlebar(c, {size = dpi(20)}) : setup {
         { -- Left
-            awful.titlebar.widget.iconwidget(c),
+            utils.changewidgetbg(space, beautiful.color_array[1]),
+            utils.changewidgetbg(awful.titlebar.widget.iconwidget(c), beautiful.color_array[1]),
+            utils.changewidgetbg(space, beautiful.color_array[1]),
+            sep.new("alpha", beautiful.color_array[1], sep.direction.LEFT, sep.type.TRAPEZIUM),
             buttons = buttons,
             layout  = wibox.layout.fixed.horizontal
         },
@@ -544,13 +551,24 @@ client.connect_signal("request::titlebars", function(c)
             layout  = wibox.layout.flex.horizontal
         },
         { -- Right
-            awful.titlebar.widget.maximizedbutton(c),
-            awful.titlebar.widget.closebutton    (c),
-
+            sep.new(beautiful.color_array[1], "alpha", sep.direction.LEFT, sep.type.TRAPEZIUM),
+            utils.maximizebutton(c),
+            utils.close(c),
             layout = wibox.layout.fixed.horizontal()
         },
         layout = wibox.layout.align.horizontal
     }
+    local borderconfig={
+        ttargs = {size = dpi(1)},
+        setupargs ={
+            buttons = buttons,
+            layout  = wibox.layout.fixed.vertical
+        }
+    }
+    
+    awful.titlebar(c,{position="left", size = borderconfig.ttargs.size}): setup(borderconfig.setupargs)
+    awful.titlebar(c,{position="right", size = borderconfig.ttargs.size}): setup(borderconfig.setupargs)
+    awful.titlebar(c,{position="bottom", size = borderconfig.ttargs.size}): setup(borderconfig.setupargs)
 end)
 
 -- Enable sloppy focus, so that focus follows mouse.

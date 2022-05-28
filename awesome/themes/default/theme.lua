@@ -27,8 +27,8 @@ theme.fg_focus      = theme.color_array[16]
 theme.fg_urgent     = "#ffffff"
 theme.fg_minimize   = xrdb.background
 
-theme.useless_gap   = dpi(0)
-theme.border_width  = dpi(1)
+theme.useless_gap   = dpi(3)
+theme.border_width  = dpi(0)
 theme.border_normal = xrdb.color10
 theme.border_focus  = xrdb.color10
 theme.border_marked = "#91231c"
@@ -130,7 +130,7 @@ theme.awesome_icon = theme_assets.awesome_icon(
 -- from /usr/share/icons and /usr/share/icons/hicolor will be used.
 theme.icon_theme = nil
 theme.icon_size = 12
-theme.icon_font = "Font Awesome 5 Free-Solid-900 " -- attention to space at the end!
+theme.icon_font = "Font Awesome 6 Free Solid " -- attention to space at the end!
 theme.icon_color = "#587D8D"
 
 
