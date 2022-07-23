@@ -23,7 +23,7 @@ local dpi = require("beautiful.xresources").apply_dpi
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
 
-awful.spawn("picom --experimental-backends")
+awful.spawn("picom-trans --experimental-backends")
 awful.spawn("xmousepasteblock")
 
 -- {{{ Error handling
@@ -67,9 +67,9 @@ awful.layout.layouts = {
     awful.layout.suit.tile.bottom,
     awful.layout.suit.tile.top,
     awful.layout.suit.fair,
-    awful.layout.suit.spiral,
-    awful.layout.suit.spiral.dwindle,
-    awful.layout.suit.corner.nw,
+    --awful.layout.suit.spiral,
+    --awful.layout.suit.spiral.dwindle,
+    --awful.layout.suit.corner.nw,
 }
 -- }}}
 
