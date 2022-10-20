@@ -18,13 +18,23 @@ local utils = require("utils")
 local sep = require("separators")
 local globalkeys = require("globalkeys")
 local dpi = require("beautiful.xresources").apply_dpi
+local net_speed_widget = require("awesome-wm-widgets/awesome-wm-widgets.net-speed-widget.net-speed")
+local mpris_widget = require("awesome-wm-widgets.mpris-widget")
+local isMicHotkeyBeingPressed = false
 
 -- Enable hotkeys help widget for VIM and other apps
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
 
-awful.spawn("picom-trans --experimental-backends")
+
+--pactl set-source-mute 1 toggle
+--pactl get-source-mute 0 
+
+
+awful.spawn("picom")
+--awful.spawn("picom-trans --experimental-backends")
 awful.spawn("xmousepasteblock")
+--awful.spawn.once("/usr/lib/xfce-polkit/xfce-polkit")
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -166,6 +176,27 @@ local space = wibox.widget{
 local memicon = utils.createicon('\u{f538}') 
 local cpuicon = utils.createicon('\u{f2db}') 
 local neticon = utils.createicon('\u{f1eb}', beautiful.bg_focus)
+local micONicon = '\u{f130}'
+local micOFFicon = '\u{f131}'
+local micIcon = awful.widget.watch("pactl get-source-mute 0", 0.5,
+function(widget, stdout)
+    local currentIcon
+    local prefix = "Mute: "
+    local result = string.gsub(string.gsub(tostring(stdout), prefix, ""), "\n", "")
+    local isMuted = result == ("no")
+
+    
+    if isMuted then
+        currentIcon = ' <span color="'.. beautiful.bg_focus ..'">'.. micONicon ..'</span> '
+    else
+        currentIcon = ' <span color="'.. beautiful.bg_focus ..'">'.. micOFFicon ..'</span> '
+    end
+
+
+
+
+    widget:set_markup(currentIcon)
+end) --utils.createicon(micONicon, beautiful.bg_focus)
 
 local arrl_ld1 = lainseparators.arrow_right("alpha", beautiful.bg_focus)
 local arrl_ld2 = lainseparators.arrow_right(beautiful.bg_focus, "alpha")
@@ -276,7 +307,8 @@ awful.screen.connect_for_each_screen(function(s)
             utils.changewidgetbg(mem.widget, beautiful.bg_focus),
             arrl_dl1,
             --sep.new("alpha", beautiful.bg_focus, sep.direction.LEFT, sep.type.TRAPEZIUM),
-            neticon,
+            micIcon,
+            --net_speed_widget(),
             --sep.new("alpha", beautiful.bg_focus, sep.direction.RIGHT, sep.type.TRAPEZIUM),
             --net,
             arrl_ld1,
@@ -356,6 +388,32 @@ clientkeys = gears.table.join(
 -- This should map on the top row of your keyboard, usually 1 to 9.
 for i = 1, 9 do
     globalkeys = gears.table.join(globalkeys,
+    -- View tag only.
+        awful.key({modkey},"0",
+        function () 
+            if not isMicHotkeyBeingPressed then
+                local prefix = "Mute: "
+                local result = string.gsub(string.gsub(tostring(io.popen("pactl get-source-mute 0"):read("a")), prefix, ""), "\n", "")
+                local isMuted = result == ("no")
+
+                if isMuted then
+                    awful.spawn("paplay "..tostring(awesome.themes_path).."/default/microphone-muted-teamspeak.ogg")
+                else
+                    awful.spawn("paplay "..tostring(awesome.themes_path).."/default/microphone-activated-teamspeak.ogg")
+                end
+                
+                awful.spawn("pactl set-source-mute 0 toggle") 
+                micIcon:emit_signal("timeout")
+                isMicHotkeyBeingPressed = true
+            end
+
+            
+            
+        end,
+        function ()
+            isMicHotkeyBeingPressed = false
+        end,
+        {description = "mute/unmute default microphone", group = "DayOS", keygroup = "numpad",}),
         -- View tag only.
         awful.key({ modkey }, "#" .. i + 9,
                   function ()
