@@ -50,10 +50,8 @@ local globalkeys = gears.table.join(
               {description = "jump to urgent client", group = "client"}),
     awful.key({ "Mod1",           }, "Tab",
         function ()
-            awful.client.focus.history.previous()
-            if client.focus then
-                client.focus:raise()
-            end
+            awful.spawn(' rofi -modi window -show window -hide-scrollbar -padding 50 -line-padding 4 -auto-select -kb-cancel "Alt+Escape,Escape" -kb-accept-entry "!Alt-Tab,!Alt+Alt_L,Return" -kb-row-down "Alt+Tab,Alt+Down" -kb-row-up "Alt+ISO_Left_Tab,Alt+Up"')
+            --awful.spawn("rofi -show window -kb-accept-entry '!Alt-Tab' -kb-row-down Alt-Tab")
         end,
         {description = "go back", group = "client"}),
 

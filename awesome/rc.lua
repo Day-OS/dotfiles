@@ -31,7 +31,7 @@ require("awful.hotkeys_popup.keys")
 --pactl get-source-mute 0 
 
 
-awful.spawn("picom")
+awful.spawn("picom --animations")
 --awful.spawn("picom-trans --experimental-backends")
 awful.spawn("xmousepasteblock")
 --awful.spawn.once("/usr/lib/xfce-polkit/xfce-polkit")
