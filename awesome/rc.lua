@@ -557,27 +557,38 @@ client.connect_signal("manage", function (c)
     end
 end)
 
+function double_click_event_handler(double_click_event)
+    if double_click_timer then
+        double_click_timer:stop()
+        double_click_timer = nil
+        return true
+    end
+
+    double_click_timer = gears.timer.start_new(0.20, function()
+        double_click_timer = nil
+        return false
+    end)
+end
+
 -- [TITLEBAR OF WINDOW]
 client.connect_signal("request::titlebars", function(c)
     local titlebarmenu = awful.menu({ items =   { 
         { "Floating", function() c.floating = not c.floating end, gears.filesystem.get_themes_dir() .. "default/titlebar/floating_normal_active.png"},
         { "Sticky", function() c.sticky = not c.sticky end, gears.filesystem.get_themes_dir() .. "default/titlebar/sticky_normal_inactive.png"},
         { "On-top", function() c.ontop = not c.ontop end, gears.filesystem.get_themes_dir() .. "default/titlebar/ontop_normal_inactive.png"}
-        
-        --[[
-            awful.titlebar.widget.maximizedbutton(c),
-            awful.titlebar.widget.stickybutton   (c),
-            awful.titlebar.widget.ontopbutton    (c),
-            awful.titlebar.widget.closebutton    (c),]]
-
-    }
-})
+    }})
+    
     -- buttons for the titlebar
     local buttons = gears.table.join(
         awful.button({ }, 1, function()
             c:emit_signal("request::activate", "titlebar", {raise = true})
-            titlebarmenu:hide()
-            awful.mouse.client.move(c)
+            -- WILL EXECUTE THIS ON DOUBLE CLICK
+                if double_click_event_handler() then
+                    c.maximized = not c.maximized
+                    c:raise()
+                else
+                    awful.mouse.client.move(c)
+                end
         end),
         awful.button({}, 3, function()
             c:emit_signal("request::activate", "titlebar", {raise = true})
