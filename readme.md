@@ -1,0 +1,13 @@
+noto-fonts
+noto-fonts-cjk
+ttf-twemoji
+ttf-font-awesome
+awesome
+alacitty
+pywal-16-colors 
+python-haishoku 
+rofi
+rofi-emoji
+xmousepasteblock-git
+picom-pijulius-git
+wallset

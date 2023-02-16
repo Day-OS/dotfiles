@@ -1,5 +1,7 @@
 awesome/lib/
 awesome/icons/
 awesome/lain
-awesome/themes/default/wallpaper
+awesome/awesome-wm-widgets/
+awesome/themes/default/wallpaper/*
 livewallpaper/
+*.import

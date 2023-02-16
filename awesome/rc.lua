@@ -18,7 +18,7 @@ local utils = require("utils")
 local sep = require("separators")
 local globalkeys = require("globalkeys")
 local dpi = require("beautiful.xresources").apply_dpi
-local net_speed_widget = require("awesome-wm-widgets/awesome-wm-widgets.net-speed-widget.net-speed")
+--local net_speed_widget = require("awesome-wm-widgets/awesome-wm-widgets.net-speed-widget.net-speed")
 local mpris_widget = require("awesome-wm-widgets.mpris-widget")
 local isMicHotkeyBeingPressed = false
 
@@ -86,17 +86,29 @@ awful.layout.layouts = {
 -- {{{ Menu
 -- Create a launcher widget and a main menu
 local myawesomemenu = {
-   { "hotkeys", function() hotkeys_popup.show_help(nil, awful.screen.focused()) end },
-   { "manual", terminal .. " -e man awesome" },
-   { "edit config", editor_cmd .. " " .. awesome.conffile },
-   { "restart", awesome.restart },
-   { "quit", function() awesome.quit() end },
+   { "Hotkeys", function() hotkeys_popup.show_help(nil, awful.screen.focused()) end },
+   --{ "manual", terminal .. " -e man awesome" },
+   --{ "edit config", editor_cmd .. " " .. awesome.conffile },
+   { "Restart", awesome.restart, beautiful.awesome_icon },
+   { "Quit", function() awesome.quit() end, beautiful.awesome_icon },
+   { "shutdown System", function() awful.spawn("shutdown") end },
+}
+local apps = {
+    { "Firefox", function () awful.spawn("firefox") end },
+    { "Discord", function () awful.spawn("discord") end },
+    { "Spotify", function () awful.spawn("spotify") end },
+    { "Bluetooth", function () awful.spawn("blueman-manager") end },
+    { "Audio (Pavu)", function () awful.spawn("pavucontrol") end },
+    { "NoiseTorch", function () awful.spawn("noisetorch -i") end },
 }
 
-mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
-                                    { "open terminal", terminal }
+mymainmenu = awful.menu({ items = { { "Programs", apps},
+                                    { "System", myawesomemenu },
+                                    { "Open Terminal", terminal }
                                   }
                         })
+
+--utils.menu(mymainmenu, nil, true)
 
 --mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon, menu = mymainmenu })
 
@@ -185,7 +197,6 @@ function(widget, stdout)
     local result = string.gsub(string.gsub(tostring(stdout), prefix, ""), "\n", "")
     local isMuted = result == ("no")
 
-    
     if isMuted then
         currentIcon = ' <span color="'.. beautiful.bg_focus ..'">'.. micONicon ..'</span> '
     else
@@ -533,7 +544,10 @@ awful.rules.rules = {
       except = { class = "Navigator" },
       properties = { floating = true, above = true, maximized = false, sticky = true, titlebars_enabled = true,}
     },
-
+    { rule = { class = "Firefox" },
+      properties = { screen = 1, tag = "1" } },
+    { rule = { class = "Discord" },
+    properties = { screen = 1, tag = "2" } },
 
 
     -- Set Firefox to always map on the tag named "2" on screen 1.
@@ -575,7 +589,12 @@ client.connect_signal("request::titlebars", function(c)
     local titlebarmenu = awful.menu({ items =   { 
         { "Floating", function() c.floating = not c.floating end, gears.filesystem.get_themes_dir() .. "default/titlebar/floating_normal_active.png"},
         { "Sticky", function() c.sticky = not c.sticky end, gears.filesystem.get_themes_dir() .. "default/titlebar/sticky_normal_inactive.png"},
-        { "On-top", function() c.ontop = not c.ontop end, gears.filesystem.get_themes_dir() .. "default/titlebar/ontop_normal_inactive.png"}
+        { "On-top", function() c.ontop = not c.ontop end, gears.filesystem.get_themes_dir() .. "default/titlebar/ontop_normal_inactive.png"},
+        { "Picture in Picture", function() 
+            currentmode = c.ontop
+            c.ontop = not currentmode
+            c.sticky = not currentmode
+         end, gears.filesystem.get_themes_dir() .. "default/titlebar/ontop_normal_inactive.png"}
     }})
     
     -- buttons for the titlebar
