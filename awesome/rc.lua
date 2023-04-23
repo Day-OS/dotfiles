@@ -97,6 +97,7 @@ local apps = {
     { "Firefox", function () awful.spawn("firefox") end },
     { "Discord", function () awful.spawn("discord") end },
     { "Spotify", function () awful.spawn("spotify") end },
+    { "Steam", function () awful.spawn("steam") end },
     { "Bluetooth", function () awful.spawn("blueman-manager") end },
     { "Audio (Pavu)", function () awful.spawn("pavucontrol") end },
     { "NoiseTorch", function () awful.spawn("noisetorch -i") end },
@@ -153,8 +154,13 @@ local tasklist_buttons = gears.table.join(
                                                   )
                                               end
                                           end),
-                     awful.button({ }, 3, function()
-                                              awful.menu.client_list({ theme = { width = 250 } })
+                     awful.button({ }, 3, function(c)
+                                            topbar = awful.menu({ items = { 
+                                                { "Maximized", function () 
+                                                    utils.change_titlebar_visibility(not c.maximized, c)
+                                                    c.maximized = not c.maximized end },
+                                                }})
+                                            topbar:show(c)
                                           end),
                      awful.button({ }, 4, function ()
                                               awful.client.focus.byidx(1)
@@ -290,8 +296,35 @@ awful.screen.connect_for_each_screen(function(s)
         filter  = awful.widget.tasklist.filter.currenttags,
         buttons = tasklist_buttons,
         style = {
-            shape  = function(cr, w, h)gears.shape.partially_rounded_rect(cr, w, h, true, true, false, false, 45) end}
+            shape  = function(cr, w, h)gears.shape.partially_rounded_rect(cr, w, h, true, true, false, false, 45) end},
+        widget_template = {
+            {
+                {
+                    {
+                        {
+                            id     = 'icon_role',
+                            widget = wibox.widget.imagebox,
+                        },
+                        margins = 1,
+                        widget  = wibox.container.margin,
+                    },
+                    {
+                        id     = 'text_role',
+                        widget = wibox.widget.textbox,
+                    },
+                    layout = wibox.layout.fixed.horizontal,
+                },
+                left  = 1,
+                right = 1,
+                widget = wibox.container.margin
+            },
+            id     = 'background_role',
+            widget = wibox.container.background,
+        },
     }
+    s.mytasklist:connect_signal('mouse::enter', function (tasklist)
+        
+    end)
 
     -- Create the wibox
     s.mywibox = awful.wibar({ position = "top", screen = s })
@@ -376,6 +409,7 @@ clientkeys = gears.table.join(
         {description = "minimize", group = "client"}),
     awful.key({ modkey,           }, "m",
         function (c)
+            utils.change_titlebar_visibility(not c.maximized, c)
             c.maximized = not c.maximized
             c:raise()
         end ,
@@ -540,19 +574,17 @@ awful.rules.rules = {
       }, properties = { titlebars_enabled = true }
     },
     -- Firefox Picture-in-Picture
-    { rule = { class = "Toolkit"},
+    { rule = { instance = "Toolkit"},
       except = { class = "Navigator" },
-      properties = { floating = true, above = true, maximized = false, sticky = true, titlebars_enabled = true,}
+      properties = { floating = false, above = true, maximized = false, sticky = true, titlebars_enabled = true,}
     },
-    { rule = { class = "Firefox" },
-      properties = { screen = 1, tag = "1" } },
-    { rule = { class = "Discord" },
-    properties = { screen = 1, tag = "2" } },
-
-
-    -- Set Firefox to always map on the tag named "2" on screen 1.
-    -- { rule = { class = "Firefox" },
-    --   properties = { screen = 1, tag = "2" } },
+    { rule = { class = "firefox" },
+      properties = { screen = 1, tag = "1", maximized = true, titlebars_enabled = false} },
+    { rule = { class = "discord" },
+    properties = { screen = 1, tag = "2", maximized = true, titlebars_enabled = false} },
+    { rule_any = { instance = { "vscodium", "code", "spotify"}
+      }, properties = { maximized = true, titlebars_enabled = false }
+    },
 }
 -- }}}
 
@@ -571,18 +603,6 @@ client.connect_signal("manage", function (c)
     end
 end)
 
-function double_click_event_handler(double_click_event)
-    if double_click_timer then
-        double_click_timer:stop()
-        double_click_timer = nil
-        return true
-    end
-
-    double_click_timer = gears.timer.start_new(0.20, function()
-        double_click_timer = nil
-        return false
-    end)
-end
 
 -- [TITLEBAR OF WINDOW]
 client.connect_signal("request::titlebars", function(c)
@@ -602,7 +622,9 @@ client.connect_signal("request::titlebars", function(c)
         awful.button({ }, 1, function()
             c:emit_signal("request::activate", "titlebar", {raise = true})
             -- WILL EXECUTE THIS ON DOUBLE CLICK
-                if double_click_event_handler() then
+                if utils.double_click_event_handler() then
+                    utils.change_titlebar_visibility(not c.maximized, c)
+                    
                     c.maximized = not c.maximized
                     c:raise()
                 else
@@ -666,6 +688,12 @@ end)
 
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
+
 -- }}}
 
---xmousepasteblock
+--[[screen.connect_signal("arrange", function (s)
+   for _, c in pairs(s.clients) do
+        
+    end
+end)
+]]

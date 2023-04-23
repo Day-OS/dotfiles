@@ -47,6 +47,38 @@ end
 
 
 
+util.double_click_event_handler = function(double_click_event)
+    if double_click_timer then
+        double_click_timer:stop()
+        double_click_timer = nil
+        return true
+    end
+
+    double_click_timer = gears.timer.start_new(0.20, function()
+        double_click_timer = nil
+        return false
+    end)
+end
+
+util.change_titlebar_visibility = function(visibility, client)
+    if visibility then
+        awful.titlebar.hide(client,"top")
+        awful.titlebar.hide(client,"left")
+        awful.titlebar.hide(client,"right")
+        awful.titlebar.hide(client,"bottom")
+        awful.layout.arrange(client.screen)
+        client.border_width = 0
+        
+     else
+        awful.titlebar.show(client,"top")
+        awful.titlebar.show(client,"left")
+        awful.titlebar.show(client,"right")
+        awful.titlebar.show(client,"bottom")
+        client.border_width = beautiful.border_width
+    end
+end
+
+
 
 -- FROM REDDIT | https://www.reddit.com/r/awesomewm/comments/t47dkn/comment/hyxmucu/
 local function click_to_hide(widget, hide_fct, only_outside)
@@ -89,6 +121,9 @@ local function click_to_hide_menu(menu, hide_fct, outside_only)
 
     click_to_hide(menu.wibox, hide_fct, outside_only)
 end
+
+
+
 
 
 util.menu = click_to_hide_menu

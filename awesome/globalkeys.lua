@@ -101,7 +101,8 @@ local globalkeys = gears.table.join(
     {description = "run prompt", group = "launcher"}),
     awful.key({ modkey },            "e",     function () awful.spawn.with_shell("rofi -show emoji -modi emoji") end,
               {description = "run emoji panel", group = "launcher"}),
-              
+    awful.key({ modkey },            "c",     function () awful.spawn.with_shell("rofi -show calc -modi calc -no-show-match -no-sort") end,
+              {description = "run calculator panel", group = "launcher"}),
     -- Menubar
     awful.key({ modkey }, "p", function() menubar.show() end,
               {description = "show the menubar", group = "launcher"})
