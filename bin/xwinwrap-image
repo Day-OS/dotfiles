@@ -1,0 +1,3 @@
+nice xwinwrap -b -s -fs -st -sp -ni -nf -ov -fdt -- \
+feh --fullscreen --zoom fill --window-id WID \
+$1

@@ -2,7 +2,12 @@ pcall(require, "luarocks.loader")
 local cairo = require("lgi").cairo
 local gears = require("gears")
 local awful = require("awful")
-awful.spawn("wal -R")
+
+--NOT NECESSARY ON WALLUST
+--awful.spawn("wal -R")
+
+
+
 require("awful.autofocus")
 local wibox = require("wibox")
 local beautiful = require("beautiful")
@@ -22,17 +27,25 @@ local dpi = require("beautiful.xresources").apply_dpi
 local mpris_widget = require("awesome-wm-widgets.mpris-widget")
 local isMicHotkeyBeingPressed = false
 
+
+
 -- Enable hotkeys help widget for VIM and other apps
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
 
 
---pactl set-source-mute 1 toggle
---pactl get-source-mute 0 
+awful.spawn("xrdb ~/.Xresources")
+awful.spawn("pkill xwinwrap")
+local currentwallpaper = io.open(os.getenv( "HOME" ) .."/dotfiles/cache/currentimg.txt", "r"):read()
+naughty.notify({text = currentwallpaper})
+if gears.string.endswith(currentwallpaper, ".mp4") or gears.string.endswith(currentwallpaper, ".webm") then
+    awful.spawn("xwinwrap-video " .. currentwallpaper)
+else
+    awful.spawn("xwinwrap-image " .. currentwallpaper)
+end
 
 
 awful.spawn("picom --animations")
---awful.spawn("picom-trans --experimental-backends")
 awful.spawn("xmousepasteblock")
 --awful.spawn.once("/usr/lib/xfce-polkit/xfce-polkit")
 

@@ -1,5 +1,10 @@
+#!/bin/bash
+
 #WPP folder
-FOLDER=~/dotfiles/awesome/themes/default/wallpaper/
+FOLDER=~/dotfiles/wallpaper/
+CURRENTIMAGE=~/dotfiles/cache/currentimg.txt
+THUMBCACHE=~/dotfiles/cache/thumbcache.jpg
+export PATH=$PATH:~/.cargo/bin
 
 if [ $# -eq 0 ]; then
 	wallset --quit
@@ -10,9 +15,22 @@ else
 fi
 
 
-wal -i $SECIMG --backend haishoku #--saturate 0.5	
-awesome-client "awesome.restart()"
+#wal -i $SECIMG --backend haishoku #--saturate 0.5	
 
-if [[ $SECIMG == *.mp4 ]]; then
-	wallset --video $SECIMG	
+
+pkill xwinwrap
+
+echo $SECIMG > $CURRENTIMAGE
+
+if [[ $SECIMG == *.mp4  ||  $SECIMG == *.webm ]]; then
+        ffmpeg -y -i $SECIMG -vf "select=eq(n\,0)" -q:v 31 $THUMBCACHE
+        wallust $THUMBCACHE
+        xrdb ~/.Xresources
+        awesome-client "awesome.restart()"
+        exit
 fi
+
+#in case it is an image
+wallust $SECIMG 
+xrdb ~/.Xresources
+awesome-client "awesome.restart()"

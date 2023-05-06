@@ -23,9 +23,9 @@ theme.bg_minimize   = xrdb.color2
 theme.bg_systray    = theme.bg_normal
 
 theme.fg_normal     = xrdb.color13
-theme.fg_focus      = theme.color_array[16]
+theme.fg_focus      = xrdb.background
 theme.fg_urgent     = "#ffffff"
-theme.fg_minimize   = xrdb.background
+theme.fg_minimize   = theme.color_array[16]
 
 theme.useless_gap   = dpi(3)
 theme.border_width  = dpi(0)
