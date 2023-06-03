@@ -25,6 +25,7 @@ local globalkeys = require("globalkeys")
 local dpi = require("beautiful.xresources").apply_dpi
 --local net_speed_widget = require("awesome-wm-widgets/awesome-wm-widgets.net-speed-widget.net-speed")
 local mpris_widget = require("awesome-wm-widgets.mpris-widget")
+local volume_widget = require("awesome-wm-widgets.pactl-widget.volume")
 local isMicHotkeyBeingPressed = false
 
 
@@ -98,10 +99,11 @@ awful.layout.layouts = {
 
 -- {{{ Menu
 -- Create a launcher widget and a main menu
-local myawesomemenu = {
+local systemmenu = {
    { "Hotkeys", function() hotkeys_popup.show_help(nil, awful.screen.focused()) end },
    --{ "manual", terminal .. " -e man awesome" },
    --{ "edit config", editor_cmd .. " " .. awesome.conffile },
+   { "Suspend", function () os.execute("xset dpms force suspend") end},
    { "Restart", awesome.restart, beautiful.awesome_icon },
    { "Quit", function() awesome.quit() end, beautiful.awesome_icon },
    { "shutdown System", function() awful.spawn("shutdown") end },
@@ -117,7 +119,7 @@ local apps = {
 }
 
 mymainmenu = awful.menu({ items = { { "Programs", apps},
-                                    { "System", myawesomemenu },
+                                    { "System", systemmenu },
                                     { "Open Terminal", terminal }
                                   }
                         })
@@ -365,6 +367,10 @@ awful.screen.connect_for_each_screen(function(s)
             arrl_dl1,
             --sep.new("alpha", beautiful.bg_focus, sep.direction.LEFT, sep.type.TRAPEZIUM),
             micIcon,
+            volume_widget{
+                widget_type = 'arc',
+                tooltip = true
+            },
             --net_speed_widget(),
             --sep.new("alpha", beautiful.bg_focus, sep.direction.RIGHT, sep.type.TRAPEZIUM),
             --net,

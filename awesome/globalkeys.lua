@@ -50,7 +50,7 @@ local globalkeys = gears.table.join(
               {description = "jump to urgent client", group = "client"}),
     awful.key({ "Mod1",           }, "Tab",
         function ()
-            awful.spawn(' rofi -modi window -show window -hide-scrollbar -padding 50 -line-padding 4 -auto-select -kb-cancel "Alt+Escape,Escape" -kb-accept-entry "!Alt-Tab,!Alt+Alt_L,Return" -kb-row-down "Alt+Tab,Alt+Down" -kb-row-up "Alt+ISO_Left_Tab,Alt+Up"')
+            awful.spawn(' rofi -show-icons -modi window -show window -hide-scrollbar -padding 50 -line-padding 4 -auto-select -kb-cancel "Alt+Escape,Escape" -kb-accept-entry "!Alt-Tab,!Alt+Alt_L,Return" -kb-row-down "Alt+Tab,Alt+Down" -kb-row-up "Alt+ISO_Left_Tab,Alt+Up"')
             --awful.spawn("rofi -show window -kb-accept-entry '!Alt-Tab' -kb-row-down Alt-Tab")
         end,
         {description = "go back", group = "client"}),
@@ -95,9 +95,9 @@ local globalkeys = gears.table.join(
     -- Prompt
     
               
-    awful.key({ modkey },            "r",     function () awful.spawn.with_shell("rofi -show run") --[[awful.screen.focused().mypromptbox:run()]] end,
+    awful.key({ modkey },            "r",     function () awful.spawn.with_shell("rofi -show-icons -show run") --[[awful.screen.focused().mypromptbox:run()]] end,
               {description = "run prompt", group = "launcher"}),
-    awful.key({ modkey, "Shift" },            "r",     function () awful.spawn.with_shell("rofi -show drun") --[[awful.screen.focused().mypromptbox:run()]] end,
+    awful.key({ modkey, "Shift" },            "r",     function () awful.spawn.with_shell("rofi  -show-icons -show drun") --[[awful.screen.focused().mypromptbox:run()]] end,
     {description = "run prompt", group = "launcher"}),
     awful.key({ modkey },            "e",     function () awful.spawn.with_shell("rofi -show emoji -modi emoji") end,
               {description = "run emoji panel", group = "launcher"}),

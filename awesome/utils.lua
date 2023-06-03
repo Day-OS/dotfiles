@@ -26,6 +26,7 @@ local util = {
         return iconwidget
     end,
 }
+
 util.maximizebutton = function (cr)
     local maximizebutton = util.changewidgetbg(util.createicon('\u{f31e}', beautiful.bg_focus), beautiful.color_array[1])
     maximizebutton:connect_signal("button::press", function(c, _, _, button)
@@ -35,6 +36,7 @@ util.maximizebutton = function (cr)
     end)
     return maximizebutton
 end
+
 util.close = function (cr)
     local maximizebutton = util.changewidgetbg(util.createicon('\u{f54c}', beautiful.bg_focus), beautiful.color_array[1])
     maximizebutton:connect_signal("button::press", function(c, _, _, button)
