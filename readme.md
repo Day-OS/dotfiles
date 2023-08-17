@@ -14,6 +14,7 @@ rofi
 rofi-emoji
 xmousepasteblock-git
 picom-pijulius-git
+blueberry
 
 cargo:
 wallust

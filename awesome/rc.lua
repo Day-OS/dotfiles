@@ -2,10 +2,7 @@ pcall(require, "luarocks.loader")
 local cairo = require("lgi").cairo
 local gears = require("gears")
 local awful = require("awful")
-
---NOT NECESSARY ON WALLUST
---awful.spawn("wal -R")
-
+local color = require("color")
 
 
 require("awful.autofocus")
@@ -44,6 +41,24 @@ if gears.string.endswith(currentwallpaper, ".mp4") or gears.string.endswith(curr
 else
     awful.spawn("xwinwrap-image " .. currentwallpaper)
 end
+
+--KEYBOARD COLOR
+--[[local kb_r = tonumber("0x"..kb_rgb:sub(1,2))/255
+local kb_g = tonumber("0x"..kb_rgb:sub(3,4))/255
+local kb_b = tonumber("0x"..kb_rgb:sub(5,6))/255]]
+
+
+local kb_color = color.color{hex=beautiful.bg_focus}
+local hex_old = kb_color.hex
+kb_color.l = 0.4
+kb_color.s = 1
+kb_color._hsl_to_rgb()
+kb_color._rgba_to_hex()
+
+naughty.notify({text = hex_old.. "| ".. kb_color.hex})
+
+awful.spawn("rgb_keyboard --brightness 9 --leds hurricane --color ".. kb_color.hex:sub(2) .." --speed 0 --direction left --profile 1")
+
 
 
 awful.spawn("picom --animations")
@@ -113,7 +128,7 @@ local apps = {
     { "Discord", function () awful.spawn("discord") end },
     { "Spotify", function () awful.spawn("spotify") end },
     { "Steam", function () awful.spawn("steam") end },
-    { "Bluetooth", function () awful.spawn("blueman-manager") end },
+    { "Bluetooth", function () awful.spawn("blueberry") end },
     { "Audio (Pavu)", function () awful.spawn("pavucontrol") end },
     { "NoiseTorch", function () awful.spawn("noisetorch -i") end },
 }

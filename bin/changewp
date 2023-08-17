@@ -24,7 +24,7 @@ echo $SECIMG > $CURRENTIMAGE
 
 if [[ $SECIMG == *.mp4  ||  $SECIMG == *.webm ]]; then
         ffmpeg -y -i $SECIMG -vf "select=eq(n\,0)" -q:v 31 $THUMBCACHE
-        wallust $THUMBCACHE
+        wallust $THUMBCACHE -b thumb
         xrdb ~/.Xresources
         awesome-client "awesome.restart()"
         exit
