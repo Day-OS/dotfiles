@@ -18,3 +18,5 @@ blueberry
 
 cargo:
 wallust
+
+https://github.com/dotexe1337/kaomoji-rofi

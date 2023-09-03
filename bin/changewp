@@ -2,6 +2,7 @@
 
 #WPP folder
 FOLDER=~/dotfiles/wallpaper/
+VFOLDER=~/dotfiles/livewallpaper/
 CURRENTIMAGE=~/dotfiles/cache/currentimg.txt
 THUMBCACHE=~/dotfiles/cache/thumbcache.jpg
 export PATH=$PATH:~/.cargo/bin
@@ -11,7 +12,12 @@ if [ $# -eq 0 ]; then
         #SELECTED IMAGE:
         SECIMG=$(nsxiv -a -q -t -r -o $FOLDER | xargs readlink -f)
 else
-        SECIMG=$1
+        if [[ $1 == "v" ]]; then
+                cd $VFOLDER
+                SECIMG=$(zenity --file-selection --title="Escolha um vídeo" --filename=$VFOLDER)
+        else
+                SECIMG=$1
+        fi
 fi
 
 
@@ -23,8 +29,8 @@ pkill xwinwrap
 echo $SECIMG > $CURRENTIMAGE
 
 if [[ $SECIMG == *.mp4  ||  $SECIMG == *.webm ]]; then
-        ffmpeg -y -i $SECIMG -vf "select=eq(n\,0)" -q:v 31 $THUMBCACHE
-        wallust $THUMBCACHE -b thumb
+        ffmpeg -y -i $SECIMG -vf "select=eq(n\,0)" -q:v 2 $THUMBCACHE
+        wallust $THUMBCACHE
         xrdb ~/.Xresources
         awesome-client "awesome.restart()"
         exit

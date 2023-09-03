@@ -99,6 +99,8 @@ local globalkeys = gears.table.join(
               {description = "run prompt", group = "launcher"}),
     awful.key({ modkey, "Shift" },            "r",     function () awful.spawn.with_shell("rofi  -show-icons -show drun") --[[awful.screen.focused().mypromptbox:run()]] end,
     {description = "run prompt", group = "launcher"}),
+    awful.key({ modkey, "Shift" },            "e",     function () awful.spawn.with_shell("~/kaomoji.sh") end,
+              {description = "run emoji panel", group = "launcher"}),
     awful.key({ modkey },            "e",     function () awful.spawn.with_shell("rofi -show emoji -modi emoji") end,
               {description = "run emoji panel", group = "launcher"}),
     awful.key({ modkey },            "c",     function () awful.spawn.with_shell("rofi -show calc -modi calc -no-show-match -no-sort") end,
