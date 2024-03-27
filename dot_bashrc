@@ -1,0 +1,30 @@
+#
+# ~/.bashrc
+#
+
+
+
+# If not running interactively, don't do anything
+[[ $- != *i* ]] && return
+
+export TERMINAL=kitty
+
+alias ls='ls --color=auto'
+alias grep='grep --color=auto'
+PS1='[\u@\h \W]\$ '
+. "$HOME/.cargo/env"
+
+alias neofetch='hyfetch'
+alias ls='ls --color=auto -h'
+. "$HOME/.aftman/env"
+
+alias setup-moon-codium='eval `ssh-agent -s`; ssh-add -L; ssh-add ~/.ssh/moon; codium; exit'
+alias setup-moon-ssh='ssh-add ~/.ssh/moon'
+
+#export SSH_AUTH_SOCK="${XDG_RUNTIME_DIR}/keyring/ssh"
+source "${HOME}/.fvm/env"
+source "${HOME}/.fvm/env"
+
+# Turso
+export PATH="/home/dani/.turso:$PATH"
+export PATH="$HOME/bin:$PATH"

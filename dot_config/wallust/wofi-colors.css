@@ -1,0 +1,6 @@
+@define-color light {color9};
+@define-color main {color10};
+@define-color secondary {color2};
+@define-color dark {color0};
+@define-color dark2 {color8};
+@define-color dark-transparent rgba(0, 0, 0, 0.8); 
