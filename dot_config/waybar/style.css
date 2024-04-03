@@ -93,11 +93,6 @@ button:hover{
     background-color: #64727D;
 }
 
-#battery {
-    background-color: #ffffff;
-    color: #000000;
-}
-
 #battery.charging, #battery.plugged {
     color: #ffffff;
     background-color: #26A65B;
@@ -157,7 +152,7 @@ label:focus {
 
 
 
-#custom-media, #tray, #pulseaudio, #cpu, #clock, #memory, #network, #custom-rightfirstborderradius{
+#custom-media, #tray, #pulseaudio, #cpu, #clock, #memory, #network, #custom-rightfirstborderradius, #battery{
     border-right: @secondary 1px solid;
     margin: 2px 0;
     padding: 0 4;
