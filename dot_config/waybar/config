@@ -1,11 +1,11 @@
 {
-    "layer": "top", // Waybar at top layer
+    "layer": "bottom", // Waybar at top layer
     // "position": "bottom", // Waybar position (top|bottom|left|right)
     "height": 30, // Waybar height (to be removed for auto height)
     // "width": 1280, // Waybar width
     "spacing": 0, // Gaps between modules (4px)
     // Choose the order of the modules
-    "modules-left": ["hyprland/workspaces", "sway/mode", "sway/scratchpad"],
+    "modules-left": ["hyprland/workspaces", "hyprland/submap"],
     "modules-center": ["hyprland/window"],
     "modules-right": [ "custom/rightfirstborderradius", "custom/media", "custom/media/pause", "pulseaudio", "cpu", "memory", "keyboard-state", "battery", "battery#bat2", "network", "tray", "clock"],
     // Modules configuration
@@ -42,17 +42,9 @@
             "unlocked": ""
         }
     },
-    "sway/mode": {
+    "hyprland/submap": {
         "format": "<span style=\"italic\">{}</span>"
     },
-    "sway/scratchpad": {
-        "format": "{icon} {count}",
-        "show-empty": false,
-        "format-icons": ["", ""],
-        "tooltip": true,
-        "tooltip-format": "{app}: {title}"
-    },
-
    
     "tray": {
         // "icon-size": 21,
@@ -83,11 +75,6 @@
     },
     "memory": {
         "format": "{}% "
-    },
-    "backlight": {
-        // "device": "acpi_video1",
-        "format": "{percent}% {icon}",
-        "format-icons": ["", "", "", "", "", "", "", "", ""]
     },
     "battery": {
         "states": {
@@ -133,25 +120,25 @@
         },
         "on-click": "pavucontrol"
     },
-    "custom/media": {
-        "format": "{icon} {}",
-        "return-type": "json",
-        "max-length": 40,
-        "format-icons": {
-            "spotify": "",
-            "firefox": "🎜",
-            "default": "🎜"
-        },
-
-        "on-click": "playerctl play-pause",
-        "on-scroll-up": "playerctl next",
-        "on-scroll-down": "playerctl previous",
-        "escape": true,
-        "tooltip": true,
-        "tooltip-format": "{icon} {}",
-        "exec": "/usr/bin/python3 ~/.config/waybar/custom_modules/mediaplayer.py 2> /dev/null" // Script in resources folder
-        // "exec": "$HOME/.config/waybar/mediaplayer.py --player spotify 2> /dev/null" // Filter player based on name
-    },
+    //"custom/media": {
+    //    "format": "{icon} {}",
+    //    "return-type": "json",
+    //    "max-length": 40,
+    //    "format-icons": {
+    //        "spotify": "",
+    //        "firefox": "🎜",
+    //        "default": "🎜"
+    //    },
+//
+    //    "on-click": "playerctl play-pause",
+    //    "on-scroll-up": "playerctl next",
+    //    "on-scroll-down": "playerctl previous",
+    //    "escape": true,
+    //    "tooltip": true,
+    //    "tooltip-format": "{icon} {}",
+    //    "exec": "/usr/bin/python3 ~/.config/waybar/custom_modules/mediaplayer.py 2> /dev/null" // Script in resources folder
+    //    // "exec": "$HOME/.config/waybar/mediaplayer.py --player spotify 2> /dev/null" // Filter player based on name
+    //},
     "custom/rightfirstborderradius": {
         "format": " ",
         "tooltip": false
