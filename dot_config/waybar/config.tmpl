@@ -15,7 +15,7 @@
       "on-scroll-up": "hyprctl dispatch workspace e-1",
       "on-scroll-down": "hyprctl dispatch workspace e+1",
       "format-window-separator": " • ",
-      "window-rewrite-default": "",
+      "window-rewrite-default": ""
       //"window-rewrite": {
       //    "title<.*youtube.*>": "", // Windows whose titles contain "youtube"
       //    "class<firefox>": "", // Windows whose classes are "firefox"
@@ -93,14 +93,28 @@
     "battery#bat2": {
         "bat": "BAT2"
     },
+
+    {{   if eq .chezmoi.osRelease.id "arch" }}
     "network": {
         "format-wifi": "{essid} ({signalStrength}%) ",
-        "format-ethernet": "",
-        "tooltip-format": "{ipaddr}/{cidr} | {ifname} via {gwaddr}  | Wireless SigStrength: {signalStrength}% ",
+        "format-ethernet": "\uf796",
+        "tooltip-format": "{ipaddr}/{cidr} | {ifname} via {gwaddr} \uf796 | Wireless SigStrength: {signalStrength}% ",
         "format-linked": "{ifname} (No IP) ",
         "format-disconnected": "Disconnected ⚠",
         "format-alt": "{ifname}: {ipaddr}/{cidr}"
     },
+    {{   else if eq .chezmoi.osRelease.id "debian" }}
+    "network": {
+        "format-wifi": "{essid} ({signalStrength}%) \uf1eb",
+        "format-ethernet": "\uf1eb",
+        "tooltip-format": "{ipaddr}/{cidr} | {ifname} via {gwaddr} \uf1eb | Wireless SigStrength: {signalStrength}% ",
+        "format-linked": "{ifname} (No IP) \uf1eb",
+        "format-disconnected": "Disconnected ⚠",
+        "format-alt": "{ifname}: {ipaddr}/{cidr}"
+    },
+    {{   end }}
+
+    
     "pulseaudio": {
         "scroll-step": 1, // %, can be a float
         "format": "{volume}% {icon} {format_source}",
