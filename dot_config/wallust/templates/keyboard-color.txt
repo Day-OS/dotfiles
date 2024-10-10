@@ -1,1 +1,1 @@
-{{color10.strip}}
+{{color10 | strip}}
