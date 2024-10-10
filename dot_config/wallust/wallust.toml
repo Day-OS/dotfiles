@@ -65,22 +65,18 @@ filter = "softdark16"
 
 # This is the most common way of integrating `wallust` generated palette to some program.
 # Below a simple example that searches for `config-path/zathurarc` and puts the newly created file to `~/.config/zathura/zathurarc`
+[templates]
+waybar.template = "colors.css"
+waybar.target = "~/.config/waybar/generated-colors.css"
 
-[[entry]]
-template = "wofi-colors.css"
-target = "~/.config/waybar/generated-colors.css"
+wofi.template = "colors.css"
+wofi.target = "~/.config/wofi/generated-colors.css"
 
-[[entry]]
-template = "wofi-colors.css"
-target = "~/.config/wofi/generated-colors.css"
+hyprland.template = "hyprland-colors.conf"
+hyprland.target = "~/.config/hypr/generated-colors.conf"
 
-[[entry]]
-template = "hyprland-colors.conf"
-target = "~/.config/hypr/generated-colors.conf"
-
-[[entry]]
-template = "keyboard-color.txt"
-target = "~/.config/waybar/generated-kbd-color.txt"
+keyboard.template = "keyboard-color.txt"
+keyboard.target = "~/.config/waybar/generated-kbd-color.txt"
 
 
 
