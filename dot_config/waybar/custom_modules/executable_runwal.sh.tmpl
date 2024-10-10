@@ -1,4 +1,4 @@
-wallust theme $(cat /home/dani/.config/waypaper/config.ini | grep -Po 'wallpaper\s*=\s*\K\S+')
+wallust run $(cat $HOME/.config/waypaper/config.ini | grep -Po 'wallpaper\s*=\s*\K\S+')
 
 pkill waybar
 waybar
