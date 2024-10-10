@@ -1,0 +1,30 @@
+#!/bin/bash
+
+
+{{   if eq .chezmoi.osRelease.id "arch" }}
+    {{ range .packages.arch.common -}}
+        sudo pacman -Sy --noconfirm {{ . }}
+    {{ end -}}
+    git clone https://aur.archlinux.org/yay.git
+    cd yay
+    makepkg -si
+    cd ..
+
+    {{ range .packages.arch.aur -}}
+        yay -Sy --noconfirm {{ . }}
+    {{ end -}}
+    
+{{   else if eq .chezmoi.osRelease.id "debian" }}
+
+    sudo apt update
+    sudo apt upgrade
+
+    {{ range .packages.debian.common -}}
+        sudo apt install {{ . }}
+    {{ end -}}
+
+{{   end }}
+
+#Rust
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh    
+cargo install wallust

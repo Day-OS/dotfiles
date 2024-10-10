@@ -1,0 +1,14 @@
+packages:
+  arch:
+    common:
+    - 'git'
+    - 'waybar'
+    - 'wofi'
+    aur:
+    - 'wofi-emoji'
+    - 'ttf-font-awesome'
+  debian:
+    common:
+    - 'fonts-font-awesome'
+    - 'waybar'
+    - 'wofi'
