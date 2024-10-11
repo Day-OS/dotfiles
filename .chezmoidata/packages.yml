@@ -12,3 +12,6 @@ packages:
     - 'fonts-font-awesome'
     - 'waybar'
     - 'wofi'
+    - 'grim'
+    - 'swappy'
+    - 'slurp'
