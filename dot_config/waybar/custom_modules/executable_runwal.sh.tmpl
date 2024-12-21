@@ -1,4 +1,6 @@
-wallust run $(cat $HOME/.config/waypaper/config.ini | grep -Po 'wallpaper\s*=\s*\K\S+')
+wallpaper_path=$(eval echo $(grep -Po 'wallpaper\s*=\s*\K\S+' $HOME/.config/waypaper/config.ini))
+wallust run "$wallpaper_path"
+
 
 pkill waybar
 waybar
