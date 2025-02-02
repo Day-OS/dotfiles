@@ -24,36 +24,31 @@ $menu = wofi --show
 env = XCURSOR_SIZE,24
 env = XDG_CURRENT_DESKTOP,Hyprland
 env = SSH_AUTH_SOCK,$XDG_RUNTIME_DIR/ssh-agent.socket
-env = LIBVA_DRIVER_NAME,nvidia
+env = LIBVA_DRIVER_NAME,radeonsi
 env = XDG_SESSION_TYPE,wayland
-env = GBM_BACKEND,nvidia-drm
-env = __GLX_VENDOR_LIBRARY_NAME,nvidia
 env = WLR_NO_HARDWARE_CURSORS,1
 
 {{   if eq .chezmoi.osRelease.id "arch" }}
 # Arch-specific code
-env = LD_PRELOAD,/usr/lib/libcurl.so.3
+#env = LD_PRELOAD,/usr/lib/libcurl.so.4
 
 # See https://wiki.hyprland.org/Configuring/Monitors/
 
-$monitor1 = HDMI-A-2
+$monitor1 = HDMI-A-1
 $monitor1rec = HDMI-A-1
-$monitor2 = DP-4
+$monitor2 = DP-2
 monitor = $monitor1, preferred, 0x0, 1
 monitor = $monitor2, 1440x900, auto, 1
 # See https://wiki.hyprland.org/Configuring/Workspace-Rules/
 workspace=1,$monitor1
 workspace=2,$monitor1
 workspace=3,$monitor1
-
+# Eu acredito que ao decorrer dos séculos 
 
 
 {{   else if eq .chezmoi.osRelease.id "debian" }}
 # Debian-specific code
 {{   end }}
-
-
-
 
 layerrule = blur, waybar
 windowrulev2 = workspace 1,class:(firefox)

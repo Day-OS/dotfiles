@@ -4,9 +4,22 @@ packages:
     - 'git'
     - 'waybar'
     - 'wofi'
+    - 'thunar'
+    - 'swww'
+    - 'xorg-xwayland'
+    - 'lib32-mesa'
+    - 'pipewire-pulse'
+    - 'grim'
+    - 'slurp'
+    - 'swappy'
+    - 'noto-fonts-cjk'
+    - 'hyprpolkitagent'
     aur:
+    - 'vesktop'
     - 'wofi-emoji'
     - 'ttf-font-awesome'
+    - 'waypaper'
+    - 'ttf-twemoji-color'
   debian:
     common:
     - 'fonts-font-awesome'
