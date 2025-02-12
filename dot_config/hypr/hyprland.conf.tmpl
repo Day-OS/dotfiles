@@ -17,7 +17,7 @@ source = ~/.config/hypr/generated-colors.conf
 
 # Set programs that you use
 $terminal = kitty
-$fileManager = thunar
+$fileManager = dolphin
 $menu = wofi --show 
 
 # Some default env vars.
@@ -27,6 +27,8 @@ env = SSH_AUTH_SOCK,$XDG_RUNTIME_DIR/ssh-agent.socket
 env = LIBVA_DRIVER_NAME,radeonsi
 env = XDG_SESSION_TYPE,wayland
 env = WLR_NO_HARDWARE_CURSORS,1
+env = XDG_MENU_PREFIX,arch-
+
 
 {{   if eq .chezmoi.osRelease.id "arch" }}
 # Arch-specific code
@@ -71,6 +73,7 @@ windowrulev2 = float,title:^(Picture-in-Picture)$,$firefox
 exec-once = /usr/lib/xfce-polkit/xfce-polkit
 exec-once = waybar
 exec-once = waypaper --restore; ~/.config/waybar/custom_modules/runwal.sh
+exec-once = kbuildsycoca6
 
 
 # For all categories, see https://wiki.hyprland.org/Configuring/Variables/
