@@ -19,7 +19,7 @@ packages:
     aur:
     - 'vesktop'
     - 'wofi-emoji'
-    - 'ttf-font-awesome'
+    - 'ttf-font-awesome-5'
     - 'waypaper'
     - 'ttf-twemoji-color'
   debian:
