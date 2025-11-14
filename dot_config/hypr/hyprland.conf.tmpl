@@ -27,10 +27,9 @@ env = SSH_AUTH_SOCK,$XDG_RUNTIME_DIR/ssh-agent.socket
 env = LIBVA_DRIVER_NAME,radeonsi
 env = XDG_SESSION_TYPE,wayland
 env = WLR_NO_HARDWARE_CURSORS,1
-env = XDG_MENU_PREFIX,arch-
-
 
 {{   if eq .chezmoi.osRelease.id "arch" }}
+env = XDG_MENU_PREFIX,arch-
 # Arch-specific code
 #env = LD_PRELOAD,/usr/lib/libcurl.so.4
 
