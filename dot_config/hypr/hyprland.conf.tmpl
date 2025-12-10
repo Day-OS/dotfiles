@@ -51,6 +51,8 @@ env = XDG_MENU_PREFIX,arch-
 {{- end }}
 
 {{   else if eq .chezmoi.osRelease.id "debian" }}
+env = XDG_MENU_PREFIX,debian-
+
 # Debian-specific code
 {{   end }}
 
