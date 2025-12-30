@@ -201,7 +201,7 @@ bind = $mainMod, R, exec, $menu drun -i
 bind = $mainMod, E, exec, wofi-emoji
 bind = $mainMod, L, exec, killall gammastep;  gammastep-indicator -O 25000 -b 0.4:0.4;
 bind = $SUPER_SHIFT, L, exec, killall gammastep;
-bind = SUPER_SHIFT, P, exec, killall gpu-screen-recorder; gpu-screen-recorder -w $monitor1rec -f 60 -a "$(pactl get-default-sink).monitor" -c mkv -r 30 -o "$HOME/Videos/replay";notify-send "gravação iniciada"
+bind = SUPER_SHIFT, P, exec, killall gpu-screen-recorder; gpu-screen-recorder -w $monitor1rec -f 60 -a "$(pactl get-default-sink).monitor" -c mkv -r 30 -o "$HOME/Vídeos/replay";notify-send "gravação iniciada"
 bind = $mainMod, P, exec, killall -SIGUSR1 gpu-screen-recorder; notify-send "clipe salvo" # dwindle
 bind = $mainMod, J, togglesplit, # dwindle
 
