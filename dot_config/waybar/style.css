@@ -152,7 +152,7 @@ label:focus {
 
 
 
-#custom-media, #tray, #pulseaudio, #cpu, #clock, #memory, #network, #custom-rightfirstborderradius, #battery{
+#custom-media, #tray, #pulseaudio, #cpu, #clock, #memory, #network, #custom-rightfirstborderradius, #battery, #custom-wlogout {
     border-right: @secondary 1px solid;
     margin: 2px 0;
     padding: 0 4;

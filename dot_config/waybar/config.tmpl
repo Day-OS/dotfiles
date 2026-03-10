@@ -7,7 +7,7 @@
     // Choose the order of the modules
     "modules-left": ["hyprland/workspaces", "hyprland/submap"],
     "modules-center": ["hyprland/window"],
-    "modules-right": [ "custom/rightfirstborderradius", "custom/media", "custom/media/pause", "pulseaudio", "cpu", "memory", "keyboard-state", "battery", "battery#bat2", "network", "tray", "clock"],
+    "modules-right": [ "custom/rightfirstborderradius", "custom/media", "custom/media/pause", "pulseaudio", "cpu", "memory", "keyboard-state", "battery", "battery#bat2", "network", "tray", "clock", "custom/wlogout"],
     // Modules configuration
     
     "hyprland/workspaces": {
@@ -156,6 +156,11 @@
     "custom/rightfirstborderradius": {
         "format": " ",
         "tooltip": false
+    },
+    "custom/wlogout": {
+        "format": "<span foreground=\"black\">\uf011</span>",
+        "tooltip": false,
+        "on-click": "wlogout"
     }
 }
 
