@@ -63,6 +63,24 @@ env = XDG_MENU_PREFIX,debian-
 # windowrulev2 = monitor $monitor2,title:\(DEBUG\)
 # windowrulev2 = rounding 10,title:\(DEBUG\)
 
+windowrule {
+  name = anafas
+  match:class = ^(anafas\.exe)$
+  float = on
+  fullscreen = off
+  suppress_event = fullscreen maximize
+}
+windowrule {
+  name = atpdraw
+  match:class = ^(atpdraw\.exe)$
+  float = on
+  fullscreen = off
+  suppress_event = fullscreen maximize
+}
+
+
+
+
 $firefox = class:^(firefox)$
 #windowrulev2 = fakefullscreen,title:^(Firefox)$,$firefox
 #windowrulev2 = fakefullscreen,title:^(Picture-in-Picture)$,$firefox
